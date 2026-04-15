@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to the AWS IoT Device Client will be documented in this file.
 
+## [Unreleased]
+### Fixed
+- Fixed Docker build failure by passing `-DBUILD_SDK=OFF` in the deploy stage so it uses the pre-built SDK from the base stage instead of re-downloading an incompatible version.
+- Updated Docker base image SDK version from pinned commit to `v1.42.0` to match the version expected by the Device Client source code.
+- Reset inherited CI `ENTRYPOINT` in deploy stage so the container runs the Device Client instead of the CI test script.
+
+### Added
+- Installed `openssh-server` and configured sshd in the Docker image to support AWS IoT Secure Tunneling.
+- Created `/root/certs` directory with `700` permissions for mounting device certificates. (Permissions fix by @dan-walkes)
+
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 

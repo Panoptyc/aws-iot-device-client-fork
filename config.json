@@ -1,0 +1,42 @@
+{
+    "endpoint": "a1riyn82voth9t-ats.iot.us-east-2.amazonaws.com",
+    "cert": "/root/certs/device.pem.crt",
+    "key": "/root/certs/private.pem.key",
+    "root-ca": "/root/certs/AmazonRootCA1.pem",
+    "thing-name": "monitor_certs",
+    "logging": {
+        "level": "DEBUG",
+        "type": "STDOUT",
+        "file": "./aws-iot-device-client.log"
+    },
+    "jobs": {
+        "enabled": true,
+        "handler-directory": "sample-job-handlers/"
+    },
+    "tunneling": {
+        "enabled": true
+    },
+    "device-defender": {
+        "enabled": true,
+        "interval": 300
+    },
+    "fleet-provisioning": {
+        "enabled": false,
+        "template-parameters": "",
+        "template-name": "",
+        "csr-file": "",
+        "device-key": ""
+    },
+    "samples": {
+        "pub-sub": {
+            "enabled": false,
+            "publish-topic": "",
+            "publish-file": "",
+            "subscribe-topic": "",
+            "subscribe-file": ""
+        }
+    },
+    "config-shadow": {
+        "enabled": false
+    }
+}

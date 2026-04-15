@@ -18,6 +18,7 @@ RUN apt-get update -qq \
     softhsm \
     zlib1g-dev \
     libssl-dev \
+    openssh-server \
     && apt-get clean
 
 ###############################################################################
@@ -87,7 +88,7 @@ RUN mkdir sdk-cpp-workspace \
     && cd sdk-cpp-workspace \
     && git clone https://github.com/aws/aws-iot-device-sdk-cpp-v2.git \
     && cd aws-iot-device-sdk-cpp-v2 \
-    && git checkout 74c8b683ebe5b1cbf484f6acaa281f56aaa63948 \
+    && git checkout v1.42.0 \
     && git submodule update --init --recursive \
     && cd .. \
     && mkdir aws-iot-device-sdk-cpp-v2-build \
@@ -114,7 +115,18 @@ FROM base AS deploy
 COPY . /root/aws-iot-device-client
 RUN mkdir -p /root/aws-iot-device-client/build \
     && cd /root/aws-iot-device-client/build \
-    && cmake .. \
+    && cmake -DBUILD_SDK=OFF .. \
     && cmake --build . --target aws-iot-device-client
 
-ENTRYPOINT ["/root/aws-iot-device-client/build/aws-iot-device-client"]
+RUN mkdir -p /root/certs && chmod 700 /root/certs
+
+###############################################################################
+# Configure SSH for secure tunneling
+###############################################################################
+RUN mkdir -p /run/sshd \
+    && echo 'root:root' | chpasswd \
+    && sed -i 's/#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# Start sshd in the background, then run the Device Client
+ENTRYPOINT []
+CMD /usr/sbin/sshd && /root/aws-iot-device-client/build/aws-iot-device-client --config-file /root/aws-iot-device-client/config.json

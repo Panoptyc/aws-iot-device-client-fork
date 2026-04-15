@@ -1,4 +1,37 @@
 
+# How to Run This Project
+
+Follow these steps to run the AWS IoT Device Client:
+
+
+
+1. **Get Certificates**
+  - Contact `@dan-walkes` to obtain the required AWS IoT certificates for your device.
+  - You will need the device certificate, private key, and Amazon Root CA certificate.
+  - **Copy the certificates** you receive into `./certs/aws-iot-device-client/`, replacing the existing files:
+    - `device.pem.crt`
+    - `private.pem.key`
+    - `AmazonRootCA1.pem`
+  - Make sure the new certificates overwrite the files in that directory.
+
+
+2. **Run the Setup Script**
+   - From the project root:
+     ```sh
+     ./setup.sh
+     ```
+   - Respond to prompts for information, including paths to your thing certs and your existing `config.json` file.
+
+3. **Run the Device Client**
+   - From the project root or build directory:
+     ```sh
+     ./aws-iot-device-client --config-file ../config.json
+     ```
+
+---
+
+assaf@assaf-Lenovo-Y50-70-Touch:~/Documents/aws/aws-iot-device-client/build$ ./aws-iot-device-client --config-file ../config.json
+
 # AWS IoT Device Client
  **Notice:** Previously available images are no longer available in the public gallery and will need to be built manually.
  **Notice:** Running the AWS IoT Device Client will incur usage of AWS IoT services, and is likely to incur charges on your AWS account. Please refer the pricing pages for [AWS IoT Core](https://aws.amazon.com/iot-core/pricing/), [AWS IoT Device Management](https://aws.amazon.com/iot-device-management/pricing/), and [AWS IoT Device Defender](https://aws.amazon.com/iot-device-defender/pricing/) for more details.
